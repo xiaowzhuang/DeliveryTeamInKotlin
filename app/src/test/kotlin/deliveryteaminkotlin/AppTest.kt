@@ -4,11 +4,11 @@
 package deliveryteaminkotlin
 
 import org.junit.jupiter.api.Test
-import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNotNull
 
 class AppTest {
     @Test fun appHasAGreeting() {
         val classUnderTest = App()
-        assertNotNull(classUnderTest.greeting, "app should have a greeting")
+        assertNotNull(classUnderTest.greeting)
     }
 }
