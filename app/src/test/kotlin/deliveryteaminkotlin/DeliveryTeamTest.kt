@@ -24,4 +24,15 @@ class DeliveryTeamTest {
         assertEquals(true, team.members.contains(dev));
         assertEquals(true, team.members.contains(qa));
     }
+
+    @Test
+    fun shouldBeAbleToAssignStory() {
+        var team: DeliveryTeam = DeliveryTeam("Tiangong")
+        val story: Story = Story("Story title")
+
+        team.assign(story);
+
+        assertEquals(1, team.stories.size);
+        assertEquals(true, team.stories.contains(story));
+    }
 }
