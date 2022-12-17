@@ -11,4 +11,8 @@ class DeliveryTeam(var name: String,
     fun assign(story: Story) {
         stories += story
     }
+
+    fun getMembers(predicate: (TeamMember) -> Boolean): List<TeamMember> {
+        return members.filter(predicate)
+    }
 }
