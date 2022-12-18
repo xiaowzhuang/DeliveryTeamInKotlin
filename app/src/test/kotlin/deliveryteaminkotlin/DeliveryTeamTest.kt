@@ -1,9 +1,11 @@
 package deliveryteaminkotlin
 
+import deliveryteaminkotlin.exception.MemberRoleExceedException
 import deliveryteaminkotlin.member.BusinessAnalyst
 import deliveryteaminkotlin.member.Developer
 import deliveryteaminkotlin.member.QualityAssurance
 import deliveryteaminkotlin.member.TeamMember
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -68,5 +70,21 @@ class DeliveryTeamTest {
         assertEquals(true, devs.contains(alice));
         assertEquals(true, devs.contains(mia));
         assertEquals(true, devs.contains(cathy));
+    }
+
+    @Test
+    @Throws(MemberRoleExceedException::class)
+    fun shouldThrowExceedExceptionWhenAdd2BAsGivenRuleMax2() {
+        val team = DeliveryTeam("Tiangong")
+        val baRule: (DeliveryTeam) -> Boolean = { t -> t.getMembers { m -> m is BusinessAnalyst }.size >= 1 }
+        val devRule: (DeliveryTeam) -> Boolean = { t -> t.getMembers { m -> m is Developer }.size >= 2 }
+        team.assign(baRule)
+        team.assign(devRule)
+        val m1: TeamMember = BusinessAnalyst("Alice")
+        val m2: TeamMember = BusinessAnalyst("Mia")
+        team.assign(m1)
+
+        Assertions.assertThrows(MemberRoleExceedException::class.java) { team.assign(m2) }
+        assertEquals(false, team.members.contains(m2))
     }
 }
